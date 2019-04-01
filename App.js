@@ -4,7 +4,8 @@ import {
   Easing,
 } from 'react-native';
 import {
-  StackNavigator,
+  createStackNavigator,
+  createAppContainer,
 } from 'react-navigation';
 
 import ScreenNavigation from './src/ScreenNavigation';
@@ -63,12 +64,24 @@ const transitionConfig = () => {
   };
 }
 
-const App = StackNavigator({
-  Screen: {
-    screen: ScreenNavigation,
-  },
-  initialRouteName: 'Screen',
-  transitionConfig,
-});
+const App = createAppContainer(
+  createStackNavigator({
+    Screen: {
+      screen: ScreenNavigation,
+      navigationOptions: ({ navigation }) => ({
+        headerTransparent: false,
+        headerBackTitle: 'Back',
+      }),
+    },
+    SecondScreen: {
+      screen: ScreenNavigation,
+      navigationOptions: ({ navigation }) => ({
+        headerTransparent: false,
+        headerBackTitle: 'Back',
+      }),
+    },
+    transitionConfig,
+  })
+);
 
 export default App;

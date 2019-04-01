@@ -8,51 +8,47 @@ import {
 import { NavigationActions } from 'react-navigation';
 
 const homeAction = NavigationActions.navigate({
+  routeName: 'Screen',
   index: 0,
-  actions: [
-    NavigationActions.navigate({ routeName: 'Screen' }),
-  ],
+});
+
+const secondAction = NavigationActions.navigate({
+  routeName: 'SecondScreen',
+  index: 0,
 });
 
 class ScreenNavigation extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-    const screenNumber = navigation.state.params ? navigation.state.params.screenNumber : 0;
     return {
-      title: 'Home',
+      title: `${navigation.state.routeName}`,
       headerStyle: {
         backgroundColor: 'white',
-        height: 85,
       },
       headerTitleStyle: {
-        color: 'white'
+        color: 'black'
       },
     };
-  };
-
-  nextScreen = () => {
-    const screenNumber = this.props.navigation.state.params ? this.props.navigation.state.params.screenNumber : 0;
-    const params = {
-      screenNumber: screenNumber + 1
-    };
-    this.props.navigation.navigate('Screen', params);
   };
 
   homeScreen = () => {
     this.props.navigation.dispatch(homeAction);
   };
 
+  secondScreen = () => {
+    this.props.navigation.dispatch(secondAction);
+  }
+
   render() {
     const { navigation } = this.props;
-    const screenNumber = navigation.state.params ? navigation.state.params.screenNumber : 0;
     return (
       <View style={[styles.container]}>
-        <Text style={styles.jumbo}>{screenNumber}</Text>
-        <TouchableOpacity onPress={this.nextScreen}>
-          <Text style={styles.textButton}>Next</Text>
-        </TouchableOpacity>
+        <Text style={styles.jumbo}>{navigation.state.routeName}</Text>
         <TouchableOpacity onPress={this.homeScreen}>
           <Text style={styles.textButton}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.secondScreen}>
+          <Text style={styles.textButton}>Second Screen</Text>
         </TouchableOpacity>
       </View>
     );
@@ -74,7 +70,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   jumbo: {
-    fontSize: 60,
+    fontSize: 45,
     fontWeight: '300',
     padding: 15,
   },
